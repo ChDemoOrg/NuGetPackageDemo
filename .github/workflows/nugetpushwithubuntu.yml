@@ -41,7 +41,7 @@ jobs:
       - name: Copy to package folder
         run: |
              mkdir mydemoapp
-             copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
+             cp mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
       
       - name: Create nuspec file
         shell: pwsh
