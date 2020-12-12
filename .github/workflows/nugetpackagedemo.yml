@@ -45,7 +45,9 @@ jobs:
       
       - name: Zip published files
         shell: pwsh
-        run: Compress-Archive mydemoapppub/* mydemoapp/mydemoapp.zip
+        run: |
+              md mydemoapp
+              Compress-Archive mydemoapppub/* mydemoapp/mydemoapp.zip
            
       - name: Create nuspec file
         shell: pwsh
