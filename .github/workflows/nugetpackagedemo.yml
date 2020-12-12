@@ -24,8 +24,13 @@ jobs:
       - name: Publish with dotnet
         run: dotnet publish NuGetPackageDemo.csproj -c release --output ${{env.DOTNET_ROOT}}/mydemoapppub --no-build --no-restore
      
-      - name: Create Archive Folder
-        run: mkdir -p ${{env.DOTNET_ROOT}}/mydemoapp
+      - name: List files in published folder
+        run: |
+             cd ${{env.DOTNET_ROOT}}/mydemoapppub
+             dir
+      
+     # - name: Create Archive Folder
+       # run: mkdir -p ${{env.DOTNET_ROOT}}/mydemoapp
      
       - name: Zip published files
         uses: TheDoctor0/zip-release@0.4.1
@@ -53,7 +58,7 @@ jobs:
 
               
       
-      - name: List files in published folder
+      - name: List files in package folder
         run: |
              cd ${{env.DOTNET_ROOT}}/mydemoapp
              dir
