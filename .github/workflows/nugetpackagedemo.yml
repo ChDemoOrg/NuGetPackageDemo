@@ -77,8 +77,13 @@ jobs:
       - name: nuget pack
         run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix ${env:GITHUB_RUN_ID}
       
-      - name: Add private GitHub registry to NuGet
-        run: nuget sources add -name "ChGPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
+      #- name: Add private GitHub registry to NuGet
+      #  run: nuget sources add -name "ChGPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
         
-      - name: Push generated package to GitHub registry
-        run: nuget push **\mydemoapp*.nupkg -Source "ChGPR" -ApiKey ${{ secrets.GITHUB_TOKEN }} -SkipDuplicate -NoSymbols
+      #- name: Push generated package to GitHub registry
+       # run: nuget push **\mydemoapp*.nupkg -Source "ChGPR" -ApiKey ${{ secrets.GITHUB_TOKEN }} -SkipDuplicate 
+        
+      - name: Add private GitHub registry to NuGet
+        run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }} 
+      - name: nuget push
+        run: nuget push **\mydemoapp*.nupkg -source "GPR" -SkipDuplicate -NoSymbols
