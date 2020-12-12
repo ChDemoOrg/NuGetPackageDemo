@@ -1,0 +1,84 @@
+on: [push]
+
+jobs:
+  ubuntu_build_push_nuget_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: printNumbers 
+        run: echo ${env:GITHUB_RUN_ID}
+                  ${env:GITHUB_RUN_NUMBER}
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: '3.1.404'
+        
+      - name: Restore with dotnet
+        run: dotnet restore  NuGetPackageDemo.csproj
+
+      - name: Build with dotnet
+        run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
+
+      - name: Publish with dotnet
+        run: dotnet publish NuGetPackageDemo.csproj -c release --output mydemoapppub --no-build --no-restore
+     
+      - name: List files in published folder
+        run: |
+             cd mydemoapppub
+             dir
+      
+      - name: Zip published files
+        uses: TheDoctor0/zip-release@0.4.1
+        with:
+          # Filename for archive
+          filename: mydemoapp.zip 
+          # Base path for archive files
+          path: .
+          directory: mydemoapppub
+      
+      - name: Copy to package folder
+        run: |
+             md mydemoapp
+             copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
+      
+      - name: Create nuspec file
+        shell: pwsh
+        run: |
+              $nuspec = '<?xml version="1.0"?>
+                         <package >
+                           <metadata>
+                             <id>mydemoapp</id>
+                             <version>1.0.0</version>
+                             <authors>chdemo</authors>
+                             <description>my web app</description>
+                             <repository type="git" url="https://github.com/ChDemoOrg/NuGetPackageDemo.git"></repository>
+                           </metadata>
+                         </package>';
+
+               $nuspec | out-file mydemoapp/mydemoapp.nuspec -Encoding UTF8
+
+              
+      
+      - name: List files in package folder
+        run: |
+             cd mydemoapp
+             dir
+      
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: nuget pack
+        run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix ${env:GITHUB_RUN_ID}
+      
+      
+      # 1. Below works fine to set the gitgub package repo authentication
+      #-------------
+      - name: Add private GitHub registry to NuGet
+        run: |
+              nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
+      #-------------
+      
+      - name: nuget push
+        run: nuget push **\mydemoapp*.nupkg -source "GPR" -SkipDuplicate -NoSymbols
