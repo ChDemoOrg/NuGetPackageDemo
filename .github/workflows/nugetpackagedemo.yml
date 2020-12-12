@@ -81,4 +81,4 @@ jobs:
         run: nuget sources add -name "ChGPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
         
       - name: Push generated package to GitHub registry
-        run: nuget push ./mydemoapppub/*.nupkg -Source "ChGPR" -SkipDuplicate -NoSymbols
+        run: nuget push **\mydemoapp*.nupkg -Source "ChGPR" -SkipDuplicate -NoSymbols
