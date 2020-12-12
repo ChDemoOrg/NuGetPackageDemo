@@ -27,7 +27,7 @@ jobs:
       - name: List files in published folder
         run: |
              cd mydemoapppub
-             dir
+             ls
       
       - name: Zip published files
         uses: TheDoctor0/zip-release@0.4.1
@@ -40,7 +40,7 @@ jobs:
       
       - name: Copy to package folder
         run: |
-             md mydemoapp
+             mkdir mydemoapp
              copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
       
       - name: Create nuspec file
@@ -64,7 +64,7 @@ jobs:
       - name: List files in package folder
         run: |
              cd mydemoapp
-             dir
+             ls
       
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.5
