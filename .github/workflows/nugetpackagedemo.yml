@@ -72,6 +72,6 @@ jobs:
         run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix $GITHUB_RUN_ID
 
       - name: Publish Nuget to GitHub registry
-        run: dotnet nuget push mydemoapppub/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/ChDemoOrg/index.json --skip-duplicate --no-symbols
+        run: dotnet nuget push mydemoapppub/*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/ChDemoOrg/index.json --skip-duplicate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
