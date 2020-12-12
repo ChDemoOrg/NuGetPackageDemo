@@ -22,7 +22,7 @@ jobs:
         run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
 
       - name: Publish with dotnet
-        run: dotnet publish NuGetPackageDemo.csproj -c release -o ${{env.DOTNET_ROOT}}/mydemoapppub --no-build --no-restore
+        run: dotnet publish NuGetPackageDemo.csproj -c release --output ${{env.DOTNET_ROOT}}/mydemoapppub --no-build --no-restore
      
       - name: Create Archive Folder
         run: mkdir -p ${{env.DOTNET_ROOT}}/mydemoapp
@@ -33,7 +33,8 @@ jobs:
           # Filename for archive
           filename: ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.zip 
           # Base path for archive files
-          path: ${{env.DOTNET_ROOT}}/mydemoapppub
+          path: .
+          directory: ${{env.DOTNET_ROOT}}/mydemoapppub
           
       - name: Create nuspec file
         shell: pwsh
