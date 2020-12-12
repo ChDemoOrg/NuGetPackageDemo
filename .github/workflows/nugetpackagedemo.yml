@@ -1,2 +1,10 @@
 on: [workflow_dispatch]
 
+jobs:
+  build_push_nuget_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: printNumbers 
+        run: echo $GITHUB_RUN_ID
+                  $GITHUB_RUN_NUMBER
