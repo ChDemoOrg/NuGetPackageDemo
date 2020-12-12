@@ -2,7 +2,7 @@ on: [workflow_dispatch]
 
 jobs:
   build_push_nuget_job:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       
@@ -22,8 +22,18 @@ jobs:
         run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
 
       - name: Publish with dotnet
-        run: dotnet publish NuGetPackageDemo.csproj -c release -p:PublishDir=${{env.DOTNET_ROOT}}/mydemoapp -p:PublishSingleFile=true --no-build --no-restore
-      
+        run: dotnet publish NuGetPackageDemo.csproj -c release -o ${{env.DOTNET_ROOT}}/mydemoapppub --no-build --no-restore
+     
+      - name: Zip on published files
+        # You may pin to the exact commit or the version.
+        # uses: nguyenquyhy/zip-release@fce5aed7bef4f8e25cacc8d0c7bafd71c36fa9ea
+        uses: nguyenquyhy/zip-release@v0.3.0
+        with:
+          # Filename for archive
+          filename: ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.zip 
+          # Base path for archive files
+          path: ${{env.DOTNET_ROOT}}/mydemoapppub
+          
       - name: Create nuspec file
         shell: pwsh
         run: |
