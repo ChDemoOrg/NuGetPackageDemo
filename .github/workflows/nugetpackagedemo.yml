@@ -5,6 +5,49 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      
       - name: printNumbers 
         run: echo $GITHUB_RUN_ID
                   $GITHUB_RUN_NUMBER
+      
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: '3.1.404'
+        
+      - name: Restore with dotnet
+        run: dotnet restore  NuGetPackageDemo.csproj --configuration release --no-restore
+
+      - name: Build with dotnet
+        run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
+
+      - name: Publish with dotnet
+        run: dotnet publish NuGetPackageDemo.csproj -c Release -o ${{env.DOTNET_ROOT}}/mydemoapp --no-build --no-restore
+      
+      - name: Create nuspec file
+        shell: pwsh
+        run: |
+              $nuspec = '<?xml version="1.0"?>
+                         <package >
+                           <metadata>
+                             <id>mydemoapp</id>
+                             <version>1.0.0</version>
+                             <authors>chdemo</authors>
+                             <description>my web app</description>
+                           </metadata>
+                         </package>';
+
+               $nuspec | out-file ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.nuspec -Encoding UTF8
+
+              
+      
+      - name: List files in published folder
+        run: |
+             cd ${{env.DOTNET_ROOT}}/mydemoapp
+             dir
+      
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.5
+
+            
+      
