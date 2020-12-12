@@ -22,11 +22,11 @@ jobs:
         run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
 
       - name: Publish with dotnet
-        run: dotnet publish NuGetPackageDemo.csproj -c release --output ${{env.DOTNET_ROOT}}/mydemoapppub --no-build --no-restore
+        run: dotnet publish NuGetPackageDemo.csproj -c release --output mydemoapppub --no-build --no-restore
      
       - name: List files in published folder
         run: |
-             cd ${{env.DOTNET_ROOT}}/mydemoapppub
+             cd mydemoapppub
              dir
       
      # - name: Create Archive Folder
@@ -36,10 +36,10 @@ jobs:
         uses: TheDoctor0/zip-release@0.4.1
         with:
           # Filename for archive
-          filename: ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.zip 
+          filename: mydemoapp/mydemoapp.zip 
           # Base path for archive files
           path: .
-          directory: ${{env.DOTNET_ROOT}}/mydemoapppub
+          directory: mydemoapppub
           
       - name: Create nuspec file
         shell: pwsh
@@ -54,13 +54,13 @@ jobs:
                            </metadata>
                          </package>';
 
-               $nuspec | out-file ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.nuspec -Encoding UTF8
+               $nuspec | out-file mydemoapp/mydemoapp.nuspec -Encoding UTF8
 
               
       
       - name: List files in package folder
         run: |
-             cd ${{env.DOTNET_ROOT}}/mydemoapp
+             cd mydemoapp
              dir
       
       - name: Setup NuGet.exe for use with actions
