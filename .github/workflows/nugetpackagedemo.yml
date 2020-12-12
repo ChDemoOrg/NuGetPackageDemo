@@ -7,8 +7,8 @@ jobs:
       - uses: actions/checkout@v1
       
       - name: printNumbers 
-        run: echo $GITHUB_RUN_ID
-                  $GITHUB_RUN_NUMBER
+        run: echo ${env:GITHUB_RUN_ID}
+                  ${env:GITHUB_RUN_NUMBER}
       
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1.7.2
@@ -75,7 +75,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
       
       - name: nuget pack
-        run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix $GITHUB_RUN_ID
+        run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix ${env:GITHUB_RUN_ID}
       
       - name: Add private GitHub registry to NuGet
         run: nuget sources add -name "ChGPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
