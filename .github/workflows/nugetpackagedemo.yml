@@ -55,11 +55,11 @@ jobs:
               $nuspec = '<?xml version="1.0"?>
                          <package >
                            <metadata>
-                             <id>mydemoapp</id>
+                             <id>NuGetPackageDemo</id>
                              <version>1.0.0</version>
                              <authors>chdemo</authors>
                              <description>my web app</description>
-                             <repository url="https://github.com/ChDemoOrg/NuGetPackageDemo" />
+                             <RepositoryUrl>https://github.com/ChDemoOrg/NuGetPackageDemo</RepositoryUrl>
                            </metadata>
                          </package>';
 
@@ -83,10 +83,10 @@ jobs:
         
       #- name: Push generated package to GitHub registry
        # run: nuget push **\mydemoapp*.nupkg -Source "ChGPR" -ApiKey ${{ secrets.GITHUB_TOKEN }} -SkipDuplicate 
-        
+        # -Username chamindac -Password ${{ secrets.GITHUB_TOKEN }}
       - name: Add private GitHub registry to NuGet
         run: |
-              nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username chamindac -Password ${{ secrets.GITHUB_TOKEN }} 
+              nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json  
               nuget setApiKey ${{ secrets.GITHUB_TOKEN }} -Source "https://nuget.pkg.github.com/ChDemoOrg/index.json"
       - name: nuget push
-        run: nuget push **\mydemoapp*.nupkg -source "GPR" -SkipDuplicate -NoSymbols
+        run: nuget push **\NuGetPackageDemo*.nupkg -source "GPR" -SkipDuplicate -NoSymbols
