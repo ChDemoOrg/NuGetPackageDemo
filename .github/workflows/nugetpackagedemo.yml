@@ -22,7 +22,7 @@ jobs:
         run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
 
       - name: Publish with dotnet
-        run: dotnet publish NuGetPackageDemo.csproj -c release -o ${{env.DOTNET_ROOT}}/mydemoapp --no-build --no-restore -p:PublishSingleFile=true
+        run: dotnet publish NuGetPackageDemo.csproj -c release -p:PublishDir=${{env.DOTNET_ROOT}}/mydemoapp -p:PublishSingleFile=true --no-build --no-restore
       
       - name: Create nuspec file
         shell: pwsh
