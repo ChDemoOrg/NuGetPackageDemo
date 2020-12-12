@@ -29,19 +29,23 @@ jobs:
              cd mydemoapppub
              dir
       
-      - name: Zip published files
-        uses: TheDoctor0/zip-release@0.4.1
-        with:
-          # Filename for archive
-          filename: mydemoapp.zip 
-          # Base path for archive files
-          path: .
-          directory: mydemoapppub
+      #- name: Zip published files
+      #  uses: TheDoctor0/zip-release@0.4.1
+      #  with:
+      #    # Filename for archive
+      #    filename: mydemoapp.zip 
+      #    # Base path for archive files
+      #    path: .
+      #    directory: mydemoapppub
       
-      - name: Copy to package folder
-        run: |
-             md mydemoapp
-             copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
+      #- name: Copy to package folder
+      #  run: |
+      #       md mydemoapp
+      #       copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
+      
+      - name: Zip published files
+        shell: pwsh
+        run: Compress-Archive mydemoapppub/* mydemoapp/mydemoapp.zip
            
       - name: Create nuspec file
         shell: pwsh
