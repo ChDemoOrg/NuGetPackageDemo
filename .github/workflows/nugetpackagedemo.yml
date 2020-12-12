@@ -59,7 +59,7 @@ jobs:
                              <version>1.0.0</version>
                              <authors>chdemo</authors>
                              <description>my web app</description>
-                             <RepositoryUrl>https://github.com/ChDemoOrg/NuGetPackageDemo</RepositoryUrl>
+                             <repository>https://github.com/ChDemoOrg/NuGetPackageDemo</repository>
                            </metadata>
                          </package>';
 
