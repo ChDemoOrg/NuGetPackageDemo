@@ -16,7 +16,7 @@ jobs:
           dotnet-version: '3.1.404'
         
       - name: Restore with dotnet
-        run: dotnet restore  NuGetPackageDemo.csproj --no-restore
+        run: dotnet restore  NuGetPackageDemo.csproj
 
       - name: Build with dotnet
         run: dotnet build  NuGetPackageDemo.csproj --configuration release --no-restore
