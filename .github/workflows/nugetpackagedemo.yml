@@ -32,7 +32,7 @@ jobs:
           # Filename for archive
           filename: ${{env.DOTNET_ROOT}}/mydemoapp/mydemoapp.zip 
           # Base path for archive files
-          path: ${{env.DOTNET_ROOT}}/mydemoapppub
+          path: ${{env.DOTNET_ROOT}}/mydemoapppub/
           
       - name: Create nuspec file
         shell: pwsh
