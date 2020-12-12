@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   build_push_nuget_job:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
       
@@ -27,7 +27,7 @@ jobs:
       - name: List files in published folder
         run: |
              cd mydemoapppub
-             ls
+             dir
       
       - name: Zip published files
         uses: TheDoctor0/zip-release@0.4.1
@@ -40,8 +40,8 @@ jobs:
       
       - name: Copy to package folder
         run: |
-             mkdir mydemoapp
-             cp mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
+             md mydemoapp
+             copy mydemoapppub/mydemoapp.zip mydemoapp/mydemoapp.zip
            
       - name: Create nuspec file
         shell: pwsh
@@ -63,7 +63,7 @@ jobs:
       - name: List files in package folder
         run: |
              cd mydemoapp
-             ls
+             dir
       
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.5
@@ -71,10 +71,8 @@ jobs:
       - name: nuget pack
         run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -OutputDirectory mydemoapppub -Suffix $GITHUB_RUN_ID
       
-      #- name: Add private GitHub registry to NuGet
-       # run: nuget sources add -name "ChGHRegistry" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Publish Nuget to GitHub registry
-        run: dotnet nuget push mydemoapppub/*.nupkg -k $GITHUB_TOKEN -s https://nuget.pkg.github.com/ChDemoOrg/index.json --skip-duplicate --no-symbols true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add private GitHub registry to NuGet
+        run: nuget sources add -name "ChGPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Push generated package to GitHub registry
+        run: nuget push mydemoapppub/*.nupkg -Source "ChGPR" --skip-duplicate --no-symbols true
