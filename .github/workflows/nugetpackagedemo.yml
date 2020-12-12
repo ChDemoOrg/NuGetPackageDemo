@@ -80,10 +80,12 @@ jobs:
       
       
       # 1. Below works fine to set the gitgub package repo authentication
+      # nuget setapikey used to avoid warning
       #-------------
       - name: Add private GitHub registry to NuGet
         run: |
               nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/ChDemoOrg/index.json -Username ChDemoOrg -Password ${{ secrets.GITHUB_TOKEN }}
+              nuget setapikey ${{ secrets.GITHUB_TOKEN }} -Source https://nuget.pkg.github.com/ChDemoOrg/index.json
       #-------------
       
       - name: nuget push
