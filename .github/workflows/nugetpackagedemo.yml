@@ -29,8 +29,8 @@ jobs:
              cd mydemoapppub
              dir
       
-     # - name: Create Archive Folder
-       # run: mkdir -p ${{env.DOTNET_ROOT}}/mydemoapp
+      - name: Create package folder
+        run: mkdir mydemoapp
      
       - name: Zip published files
         uses: TheDoctor0/zip-release@0.4.1
