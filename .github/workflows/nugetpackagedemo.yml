@@ -27,7 +27,7 @@ jobs:
       - name: List files in published folder
         run: |
              cd mydemoapppub
-             dir
+             ls
       
       - name: Zip published files
         uses: TheDoctor0/zip-release@0.4.1
@@ -63,10 +63,13 @@ jobs:
       - name: List files in package folder
         run: |
              cd mydemoapp
-             dir
+             ls
       
       - name: Setup NuGet.exe for use with actions
         uses: NuGet/setup-nuget@v1.0.5
+      
+      - name: nuget pack
+        run: nuget pack mydemoapp/mydemoapp.nuspec -BasePath mydemoapp -Suffix $GITHUB_RUN_ID
 
             
       
