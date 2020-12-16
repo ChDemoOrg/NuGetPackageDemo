@@ -9,3 +9,12 @@ jobs:
       - name: printdefualtvariablesubuntu 
         run: echo $GITHUB_RUN_ID
                   $GITHUB_RUN_NUMBER
+                  
+  windows_var_test_job:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: printdefualtvariableswindows 
+        run: echo $GITHUB_RUN_ID
+                  $GITHUB_RUN_NUMBER
