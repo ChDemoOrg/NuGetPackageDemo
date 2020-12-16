@@ -1,0 +1,25 @@
+on: [push]
+
+jobs:
+  ubuntu_var_test_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: printdefualtvariablesubuntu
+        shell: pwsh 
+        run: throw 'some error'
+      
+      
+      - name: runifsuccess
+        if: ${{ success() }}
+        run: Write-Host 'run on prev steps success'
+        
+      - name: runiferror
+        if: ${{ failure() }}
+        run: Write-Host 'run because faild step'
+        
+      - name: runifsuccess
+        if: ${{ always() }}
+        run: Write-Host 'run always'
+      
