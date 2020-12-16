@@ -1,0 +1,11 @@
+on: [workflow_dispatch]
+
+jobs:
+  ubuntu_build_push_nuget_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: printdefualtvariablesubuntu 
+        run: echo ${GITHUB_RUN_ID}
+                  ${GITHUB_RUN_NUMBER}
