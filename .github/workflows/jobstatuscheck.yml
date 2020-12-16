@@ -1,12 +1,12 @@
 on: [push]
 
 jobs:
-  ubuntu_var_test_job:
+  statuscheck_demo_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       
-      - name: printdefualtvariablesubuntu
+      - name: failurestep
         shell: pwsh 
         run: throw 'some error'
       
