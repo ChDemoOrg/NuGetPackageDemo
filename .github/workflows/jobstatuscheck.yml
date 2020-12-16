@@ -13,13 +13,16 @@ jobs:
       
       - name: runifsuccess
         if: ${{ success() }}
-        run: echo 'run on prev steps success'
+        shell: pwsh
+        run: write-host 'run on prev steps success'
         
       - name: runiferror
         if: ${{ failure() }}
-        run: echo 'run because faild step'
+        shell: pwsh
+        run: write-host 'run because faild step'
         
       - name: runifsuccess
         if: ${{ always() }}
-        run: echo 'run always'
+        shell: pwsh
+        run: write-host 'run always'
       
