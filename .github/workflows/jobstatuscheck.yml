@@ -21,7 +21,7 @@ jobs:
         shell: pwsh
         run: write-host 'run because faild step'
         
-      - name: runifsuccess
+      - name: runalways
         if: ${{ always() }}
         shell: pwsh
         run: write-host 'run always'
