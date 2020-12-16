@@ -8,8 +8,8 @@ jobs:
       
       - name: printdefualtvariablesubuntu
         shell: pwsh 
-        run: echo ${GITHUB_RUN_ID}
-                  ${GITHUB_RUN_NUMBER}
+        run: echo ${env:GITHUB_RUN_ID}
+                  ${env:GITHUB_RUN_NUMBER}
   
   macos_var_test_job:
     runs-on: macos-latest
@@ -18,8 +18,8 @@ jobs:
       
       - name: printdefualtvariablesmacos
         shell: pwsh 
-        run: echo ${GITHUB_RUN_ID}
-                  ${GITHUB_RUN_NUMBER}
+        run: echo ${env:GITHUB_RUN_ID}
+                  ${env:GITHUB_RUN_NUMBER}
   
   windows_var_test_job:
     runs-on: windows-latest
@@ -28,5 +28,5 @@ jobs:
       
       - name: printdefualtvariableswindows
         shell: pwsh 
-        run: echo ${GITHUB_RUN_ID}
-                  ${GITHUB_RUN_NUMBER}
+        run: echo ${env:GITHUB_RUN_ID}
+                  ${env:GITHUB_RUN_NUMBER}
