@@ -1,7 +1,7 @@
-on: [workflow_dispatch]
+on: [push]
 
 jobs:
-  ubuntu_build_push_nuget_job:
+  ubuntu_var_test_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
