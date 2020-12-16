@@ -8,7 +8,7 @@ jobs:
       
       - name: failurestep
         shell: pwsh 
-        run: throw 'some error'
+        run: write-host 'not failing now'
       
       
       - name: runifsuccess
